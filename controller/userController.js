@@ -1,6 +1,7 @@
 import User from "../model/userSchema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { loginSchema, signinSchema } from "../validator/userValidator.js";
 
 
 // creating token
@@ -22,14 +23,17 @@ const cookieOptional = {
 export const signin = async (req,res)=> {
 
     try {
-        const { name, age, email, password } = req.body ;
 
-        // checking is all mandatory data are present or not
-        if(!name || !email || !password) {
+        // checking is all mandatory data are present and valid or not
+        const result = signinSchema.safeParse(req.body);
+
+        if(!result.success) {
             return res.status(400).json({
-                message: "Incomplete information"
+                message: result.error.issues[0].message
             });
         }
+
+        const { name, age, email, password } = result.data ;
 
         // checking is the user already signin or not
         const user = await User.findOne({ email: email });
@@ -76,13 +80,15 @@ export const signin = async (req,res)=> {
 export const login = async (req,res)=> {
     try {
 
-        const { email, password } = req.body;
+        const result = loginSchema.safeParse(req.body);
 
-        if(!email || !password) {
-            return res.status(400).json({
-                message: "Incomplete information"
-            });
+        if(!result.success) {
+            res.status(400).json({
+                message: result.error.issues[0].message
+            })
         }
+
+        const { email, password } = result.data;
 
         const user = await User.findOne({email:email});
 
