@@ -1,7 +1,6 @@
 import Message from "../model/messageSchema.js";
 import Chat from "../model/chatSchema.js";
 import { generateAIResponse } from "../services/openRouterService.js";
-import messageRouter from "../routes/messageRouter.js";
 
 
 
@@ -11,37 +10,6 @@ const SYSTEM_PROMPT = `You are a helpful coding teacher.
     Use examples when needed.`;
 
 const SUMMARY_CHUNK_SIZE = 20;
-
-// const buildMessagesForAI = ({ chat, recentMessages, currentMessage }) => {
-//     const messages = [
-//         {
-//           role: "system",
-//           content: SYSTEM_PROMPT,
-//         },
-//     ];
-
-//     if (chat.summary && chat.summary.trim() !== "") {
-//         messages.push({
-//             role: "system",
-//             content: `Previous conversation summary: ${chat.summary}`,
-//         });
-//     }
-
-//     for (const msg of recentMessages) {
-//         messages.push({
-//             role: msg.role,
-//             content: msg.content,
-//         });
-//     }
-
-//     messages.push({
-//         role: "user",
-//         content: currentMessage,
-//     });
-
-//     return messages;
-// };
-
 
 const buildMessagesForAI = ({ chat, recentMessages, currentMessage }) => {
     // Combine system prompt and conversation summary

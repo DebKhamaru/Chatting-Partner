@@ -1,5 +1,4 @@
 import Chat from "../model/chatSchema.js";
-import User from "../model/userSchema.js";
 import Message from "../model/messageSchema.js";
 
 
