@@ -432,24 +432,6 @@ system_instruction: systemInstruction
 
 ---
 
-# 📊 Token Usage
-
-The backend also stores AI token usage with each assistant message.
-
-Example:
-
-```js
-usage: {
-    promptTokens: usage?.promptTokenCount || 0,
-    completionTokens: usage?.candidatesTokenCount || 0,
-    totalTokens: usage?.totalTokenCount || 0
-}
-```
-
-This makes it possible to track how many tokens are being used by the application.
-
----
-
 # 🗄️ Database
 
 The application uses **MongoDB** with **Mongoose**.
@@ -615,8 +597,3 @@ LinkedIn: `https://linkedin.com/in/deb-khamaru-468b04396`
 # 📄 License
 
 This project is currently intended for learning and development purposes.
-
-```
-
-This README is suitable for putting directly into your backend repository as **`README.md`**.
-```
