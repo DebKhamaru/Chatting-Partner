@@ -1,5 +1,5 @@
 import express from "express";
-import { signin, login, profile, logout } from "../controller/userController.js";
+import { signin, login, profile, logout, deleteUser } from "../controller/userController.js";
 import authUserMiddleware from "../middleware/authUserMiddleware.js";
 
 const userRouter = express.Router();
@@ -15,6 +15,9 @@ userRouter.get("/profile", authUserMiddleware, profile);
 
 // log out
 userRouter.post("/logout", logout);
+
+// delete user
+userRouter.delete("/delete", authUserMiddleware, deleteUser);
 
 
 

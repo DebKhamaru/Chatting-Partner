@@ -1,4 +1,6 @@
 import User from "../model/userSchema.js";
+import Chat from "../model/chatSchema.js";
+import Message from "../model/messageSchema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { loginSchema, signinSchema } from "../validator/userValidator.js";
@@ -97,6 +99,7 @@ export const login = async (req,res)=> {
                 message: "Invalid user"
             });
         }
+        
 
         const isMatch = await bcrypt.compare(password, user.password);
 
@@ -151,6 +154,31 @@ export const logout = async (req,res)=> {
         res.status(200).json({
             message: "User logged out successfully"
         })
+
+    }
+    catch(err) {
+        console.log(err);
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+}
+
+// delete user account
+export const deleteUser = async (req,res)=> {
+    try {
+
+        await Message.deleteMany({userId: req.user._id});
+
+        await Chat.deleteMany({userId:req.user._id});
+
+        await User.deleteOne({_id: req.user._id});
+
+        res.clearCookie("token",{httpOnly:true,secure:false});
+
+        res.status(200).json({
+            message: "Profile deleted successfully"
+        });
 
     }
     catch(err) {

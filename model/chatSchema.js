@@ -15,7 +15,7 @@ const chatSchema = new mongoose.Schema(
 
         model: {
             type: String,
-            required: true
+            default: "gemini-3.8-flash"
         },
 
         summary: {

@@ -26,10 +26,9 @@ export const signinSchema = z.object({
 });
 
 export const loginSchema = z.object({
-    email: z.preprocess((value)=>{
-            typeof value == "string" ? value.trim().toLowerCase() : "",
+    email: z.preprocess((value)=>
+            typeof value == "string" ? value.trim().toLowerCase(): "",
             z.email("Email must be valid")
-        }   
     ),
     password: z
         .string()
